@@ -289,7 +289,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		/*super.onCreate(savedInstanceState);
 		setContentView(R.layout.parentlayout);
 		thisactivity = this;
 
@@ -309,7 +309,19 @@ public class ParentActivity extends BaseActivity implements FormListener {
 		loadParentUI();
 		this.gotoForm(CommonStaticClass.questionMap.get(
 				CommonStaticClass.currentSLNo).getFormname());
-		// motion();
+*/		// motion();
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.parentlayout);
+		thisactivity = this;
+		con = this;
+		dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+		//font = Typeface.createFromAsset(getAssets(), "Siyam Rupali ANSI.ttf");
+
+		loadParentUI();
+		this.gotoForm(CommonStaticClass.questionMap.get(
+				CommonStaticClass.currentSLNo).getFormname());
 	}
 
 	private String q4_a2 = "";
@@ -2290,7 +2302,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 				|| CommonStaticClass.questionMap
 						.get(CommonStaticClass.currentSLNo).getQvar()
-						.equalsIgnoreCase("q1_1")
+						.equalsIgnoreCase("q11_1")
 
 				|| CommonStaticClass.questionMap
 						.get(CommonStaticClass.currentSLNo).getQvar()
@@ -2329,7 +2341,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 							.format("select * from District Order By DistName");
 				else if (CommonStaticClass.questionMap
 						.get(CommonStaticClass.currentSLNo).getQvar()
-						.equalsIgnoreCase("q1_1"))
+						.equalsIgnoreCase("q11_1"))
 					sql = String
 							.format("select ID,Name from tblUser where Active = 'Y'");
 
@@ -2424,7 +2436,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 						} else if (CommonStaticClass.questionMap
 								.get(CommonStaticClass.currentSLNo).getQvar()
-								.equalsIgnoreCase("q1_1")) {
+								.equalsIgnoreCase("q11_1")) {
 							users.add(mCursor.getString(mCursor
 									.getColumnIndex("ID"))
 									+ " : "
@@ -2526,7 +2538,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 									.getQvar().equalsIgnoreCase("Q19aa")
 							|| CommonStaticClass.questionMap
 									.get(CommonStaticClass.currentSLNo)
-									.getQvar().equalsIgnoreCase("q1_1")
+									.getQvar().equalsIgnoreCase("q11_1")
 							|| CommonStaticClass.questionMap
 									.get(CommonStaticClass.currentSLNo)
 									.getQvar().equalsIgnoreCase("q1_5aa")
@@ -2598,7 +2610,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 									|| CommonStaticClass.questionMap
 											.get(CommonStaticClass.currentSLNo)
-											.getQvar().equalsIgnoreCase("q1_1")
+											.getQvar().equalsIgnoreCase("q11_1")
 
 									|| CommonStaticClass.questionMap
 											.get(CommonStaticClass.currentSLNo)
@@ -8971,7 +8983,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 			if (dbHelper.executeDMLQuery(sql)) {
 
-				if (!gotoskip()) {
+			/*	if (!gotoskip()) {
 					if (qName.equalsIgnoreCase("q3_4")) {
 						if (op.qidList.get(0).equalsIgnoreCase("q3_4_5") && aaa.get(0) == 1)
 						{
@@ -9003,14 +9015,27 @@ public class ParentActivity extends BaseActivity implements FormListener {
 							CommonStaticClass.questionMap.get(
 									CommonStaticClass.currentSLNo).getQvar(),
 							CommonStaticClass.questionMap.get(
-									CommonStaticClass.currentSLNo).getQnext1());
+									CommonStaticClass.currentSLNo).getQnext1());*/
+				if (qName.equalsIgnoreCase("q3_4")
+						&& op.qidList.get(0).equalsIgnoreCase("q3_4_5") && aaa.get(0) == 1) {
+					
+						nullifyWithInRange(
+								CommonStaticClass.questionMap.get(
+										CommonStaticClass.currentSLNo).getQvar(),"sec04");
+						CommonStaticClass.findOutNextSLNo(
+								qName,"sec04");
+						CommonStaticClass.nextQuestion(ParentActivity.this);
+					
+				}
+				else {
 					CommonStaticClass.findOutNextSLNo(
 							qName,
 							CommonStaticClass.questionMap.get(
 									CommonStaticClass.currentSLNo).getQnext1());
 					CommonStaticClass.nextQuestion(ParentActivity.this);
-					}
 				}
+					//}
+				//}
 			}
 
 			else {
@@ -12466,41 +12491,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 							+ CommonStaticClass.memberID + "'";
 
 				if (dbHelper.executeDMLQuery(sql)) {
-					if (CommonStaticClass.questionMap
-							.get(CommonStaticClass.currentSLNo).getQvar()
-							.equalsIgnoreCase("Q5a")
-							&& code != 1) {
-						String updatesql = "UPDATE tblMainQues set Q6 = null ,Q7 = null where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						if (dbHelper.executeDMLQuery(updatesql)) {
-
-						}
-					}
-
-					if (CommonStaticClass.questionMap
-							.get(CommonStaticClass.currentSLNo).getQvar()
-							.equalsIgnoreCase("q4_1")
-							&& code != 1) {
-						String updatesql = "UPDATE tblMainQues set q4_15days = null ,q4_15hours = null,q4_15mins = null,q4_18days = null ,q4_18hours = null,q4_18mins = null where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						if (dbHelper.executeDMLQuery(updatesql)) {
-
-						}
-					}
-
-					if (qtoGo != null && qtoGo != ""
-							&& !nextToGo.equalsIgnoreCase("END")) {
-						CommonStaticClass.currentSLNo = CommonStaticClass
-								.giveTheSLNo(qtoGo) - 1;
-						CommonStaticClass.findOutNextSLNo(
-								qName,
-								CommonStaticClass.questionMap.get(
-										CommonStaticClass.currentSLNo)
-										.getQnext1());
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-						return;
-					}
-					// End Angsuman
+					
 					if (nextToGo.equalsIgnoreCase("END")) {
 						Message msg = new Message();
 						msg.what = UPDATEDONE;
@@ -12511,318 +12502,16 @@ public class ParentActivity extends BaseActivity implements FormListener {
 							CommonStaticClass.currentSLNo = 31;
 							CommonStaticClass.nextQuestion(ParentActivity.this);
 						}
-					} else if (qName.equalsIgnoreCase("q4_13")) {
-						String vName = "";
-						sql = "Select q4_6 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursorq = null;
-						try {
-							mCursorq = dbHelper.getQueryCursor(sql);
-							if (mCursorq.getCount() > 0) {
-
-								if (mCursorq.moveToFirst()) {
-									do {
-										vName = mCursorq.getString(mCursorq
-												.getColumnIndex("q4_6"));
-									} while (mCursorq.moveToNext());
-								}
-							}
-
-						} catch (Exception e) {
-							Log.e("Exception", e.getMessage());
-						} finally {
-							if (mCursorq != null)
-								mCursorq.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q4_14";
-						} else {
-							String updatesql = "UPDATE tblMainQues set q4_15days = null ,q4_15hours = null,q4_15mins = null,q4_18days = null ,q4_18hours = null,q4_18mins = null where dataid='"
-									+ CommonStaticClass.dataId + "'";
-							if (dbHelper.executeDMLQuery(updatesql)) {
-
-							}
-
-							nextToGo = "q41mm";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
+					}  
+					else if(qName.equalsIgnoreCase("q4_6")
+							&& getSingleChoiceValue() == 2)
+					{
+						nullifyWithInRange(qName, "q4_7");
+						CommonStaticClass.findOutNextSLNo(qName, q4_7);
 						CommonStaticClass.nextQuestion(ParentActivity.this);
+						
 					}
-
-					else if (qName.equalsIgnoreCase("q4_16")) {
-						String vName = "";
-						sql = "Select q4_16 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursor1 = null;
-						try {
-							mCursor1 = dbHelper.getQueryCursor(sql);
-							if (mCursor1.getCount() > 0) {
-
-								if (mCursor1.moveToFirst()) {
-									do {
-										vName = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_16"));
-									} while (mCursor1.moveToNext());
-								}
-							}
-
-						} catch (Exception e) {
-
-						} finally {
-							if (mCursor1 != null)
-								mCursor1.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q4_17";
-						} else {
-							String updatesql = "UPDATE tblMainQues set q4_18days = null ,q4_18hours = null,q4_18mins = null where dataid='"
-									+ CommonStaticClass.dataId + "'";
-							if (dbHelper.executeDMLQuery(updatesql)) {
-
-							}
-							nextToGo = "q41mm";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-					} else if (qName.equalsIgnoreCase("q4_20")) {
-						String vName = "";
-						String vName1 = "";
-						String vName2 = "";
-						String vName3 = "";
-
-						sql = "Select q4_20,q4_17_1,q4_17_2,q4_17_11 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursor1 = null;
-						try {
-							mCursor1 = dbHelper.getQueryCursor(sql);
-							if (mCursor1.getCount() > 0) {
-								if (mCursor1.moveToFirst()) {
-									do {
-										vName = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_20"));
-										vName1 = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_17_1"));
-										vName2 = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_17_2"));
-										vName3 = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_17_11"));
-									} while (mCursor1.moveToNext());
-								}
-							}
-
-						} catch (Exception e) {
-
-						} finally {
-							if (mCursor1 != null)
-								mCursor1.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q4_21";
-						} else if (vName1.equalsIgnoreCase("1")
-								|| vName2.equalsIgnoreCase("1")
-								|| vName3.equalsIgnoreCase("1")) {
-							nextToGo = "q423m";
-						} else {
-							nextToGo = "q4_24";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-					} else if (qName.equalsIgnoreCase("q4_22")) {
-						String vName = "";
-						sql = "Select q4_22 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursor1 = null;
-						try {
-							mCursor1 = dbHelper.getQueryCursor(sql);
-							if (mCursor1.getCount() > 0) {
-								if (mCursor1.moveToFirst()) {
-									do {
-										vName = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_22"));
-
-									} while (mCursor1.moveToNext());
-								}
-							}
-
-						} catch (Exception e) {
-
-						} finally {
-							if (mCursor1 != null)
-								mCursor1.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q4_23";
-						} else {
-							nextToGo = "q4_24";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-					} else if (qName.equalsIgnoreCase("q4_24")) {
-						String vName = "";
-						String vName1 = "";
-						sql = "Select q4_24,q4_22 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursor1 = null;
-						try {
-							mCursor1 = dbHelper.getQueryCursor(sql);
-							if (mCursor1.getCount() > 0) {
-								if (mCursor1.moveToFirst()) {
-									do {
-										vName = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_24"));
-										vName1 = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_22"));
-
-									} while (mCursor1.moveToNext());
-								}
-							}
-
-						} catch (Exception e) {
-
-						} finally {
-							if (mCursor1 != null)
-								mCursor1.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q4_25";
-						} else if (vName1.equalsIgnoreCase("1")) {
-							nextToGo = "q515m";
-						} else {
-							nextToGo = "comments";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-					} else if (qName.equalsIgnoreCase("q4_25")) {
-						String vName = "";
-
-						sql = "Select q4_25 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursor1 = null;
-						try {
-							mCursor1 = dbHelper.getQueryCursor(sql);
-							if (mCursor1.getCount() > 0) {
-								if (mCursor1.moveToFirst()) {
-									do {
-										vName = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_25"));
-
-									} while (mCursor1.moveToNext());
-								}
-							}
-
-						} catch (Exception e) {
-
-						} finally {
-							if (mCursor1 != null)
-								mCursor1.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q4_26";
-						} else {
-							nextToGo = "q4_27";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-					} else if (qName.equalsIgnoreCase("q4_29")) {
-						String vName = "";
-
-						sql = "Select q4_29 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursor1 = null;
-						try {
-							mCursor1 = dbHelper.getQueryCursor(sql);
-							if (mCursor1.getCount() > 0) {
-								if (mCursor1.moveToFirst()) {
-									do {
-										vName = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_29"));
-
-									} while (mCursor1.moveToNext());
-								}
-							}
-
-						} catch (Exception e) {
-
-						} finally {
-							if (mCursor1 != null)
-								mCursor1.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q4_30";
-						} else {
-							nextToGo = "q4_31";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-					} else if (qName.equalsIgnoreCase("q4_32")) {
-						String vName = "";
-
-						sql = "Select q4_32 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursor1 = null;
-						try {
-							mCursor1 = dbHelper.getQueryCursor(sql);
-							if (mCursor1.getCount() > 0) {
-								if (mCursor1.moveToFirst()) {
-									do {
-										vName = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_32"));
-
-									} while (mCursor1.moveToNext());
-								}
-							}
-						} catch (Exception e) {
-
-						} finally {
-							if (mCursor1 != null)
-								mCursor1.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q4_33";
-						} else {
-							nextToGo = "q4_35";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-					} else if (qName.equalsIgnoreCase("q4_35")) {
-						String vName = "";
-
-						sql = "Select q4_22 from tblMainQues where dataid='"
-								+ CommonStaticClass.dataId + "'";
-						Cursor mCursor1 = null;
-						try {
-							mCursor1 = dbHelper.getQueryCursor(sql);
-							if (mCursor1.getCount() > 0) {
-								if (mCursor1.moveToFirst()) {
-									do {
-										vName = mCursor1.getString(mCursor1
-												.getColumnIndex("q4_22"));
-									} while (mCursor1.moveToNext());
-								}
-							}
-						} catch (Exception e) {
-
-						} finally {
-							if (mCursor1 != null)
-								mCursor1.close();
-						}
-						if (vName.equalsIgnoreCase("1")) {
-							nextToGo = "q515m";
-						} else {
-							nextToGo = "comments";
-						}
-						nullifyWithInRange(qName, nextToGo);
-						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
-						CommonStaticClass.nextQuestion(ParentActivity.this);
-					} else {
+					else {
 						nullifyWithInRange(qName, nextToGo);
 						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
 						CommonStaticClass.nextQuestion(ParentActivity.this);
@@ -16738,6 +16427,41 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 		});
 
+	}
+	public int getSingleChoiceValue()
+	{
+		String sql1 = "";
+		int choiceValue = 0;
+		sql1 = "Select "+qName+" from tblMainQues where dataid='" + CommonStaticClass.dataId + "'";	
+		//sql1 = "Select q5_1,q5_2,q5_3,q5_4,q5_5,q5_6 from tblMainQues where dataid='" + CommonStaticClass.dataId + "'";
+
+		Cursor mCursor1 = null;
+		
+		
+		try {
+			mCursor1 = dbHelper.getQueryCursor(sql1);
+
+			if (mCursor1 != null && mCursor1.getCount() > 0) {
+				
+					mCursor1.moveToFirst();
+					
+					
+						
+							
+						choiceValue = Integer.parseInt(mCursor1.getString(mCursor1.getColumnIndex(qName)));
+						
+				
+					
+				}	
+			} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if (mCursor1 != null)
+				mCursor1.close();
+			
+		}
+		return choiceValue;
 	}
 
 	@Override

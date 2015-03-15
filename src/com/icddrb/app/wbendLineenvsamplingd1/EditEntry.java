@@ -210,12 +210,12 @@ public class EditEntry extends BaseActivity{
 			if(mCursor.moveToFirst()){
 				do{		
 					QuestionData qd = new QuestionData(mCursor.getInt(mCursor.getColumnIndex("SLNo")), mCursor.getString((mCursor.getColumnIndex("Qvar"))), mCursor.getString((mCursor.getColumnIndex("Formname"))), mCursor.getString((mCursor.getColumnIndex("Qdescbng"))), mCursor.getString((mCursor.getColumnIndex("Qdesceng"))), mCursor.getString((mCursor.getColumnIndex("QType"))), mCursor.getString((mCursor.getColumnIndex("Qnext1"))), mCursor.getString((mCursor.getColumnIndex("Qnext2"))), mCursor.getString((mCursor.getColumnIndex("Qnext3"))), mCursor.getString((mCursor.getColumnIndex("Qnext4"))), mCursor.getString((mCursor.getColumnIndex("Qchoice1eng"))), mCursor.getString((mCursor.getColumnIndex("Qchoice2eng"))), mCursor.getString((mCursor.getColumnIndex("Qchoice3eng"))), mCursor.getString((mCursor.getColumnIndex("Qchoice1bng"))), mCursor.getString((mCursor.getColumnIndex("Qchoice2bng"))), mCursor.getString((mCursor.getColumnIndex("Qchoice3bng"))), mCursor.getString((mCursor.getColumnIndex("Qrange1"))), mCursor.getString((mCursor.getColumnIndex("Qrange2"))), mCursor.getString((mCursor.getColumnIndex("DataType"))), mCursor.getString((mCursor.getColumnIndex("Tablename"))));
-					if(!CommonStaticClass.dataId.substring(0,2).equalsIgnoreCase("00") && (mCursor.getString((mCursor.getColumnIndex("Qvar"))).equalsIgnoreCase("q15") || mCursor.getString(mCursor.getColumnIndex("Qvar")).equalsIgnoreCase("q15family")))
+					/*if(!CommonStaticClass.dataId.substring(0,2).equalsIgnoreCase("00") && (mCursor.getString((mCursor.getColumnIndex("Qvar"))).equalsIgnoreCase("q15") || mCursor.getString(mCursor.getColumnIndex("Qvar")).equalsIgnoreCase("q15family")))
 					{
 						
 					}
 						
-					else CommonStaticClass.questionMap.put(mCursor.getInt(mCursor.getColumnIndex("SLNo")), qd);
+					else */CommonStaticClass.questionMap.put(mCursor.getInt(mCursor.getColumnIndex("SLNo")), qd);
 
 				}while(mCursor.moveToNext());
 			}
