@@ -10906,6 +10906,21 @@ public class ParentActivity extends BaseActivity implements FormListener {
 		}
 
 		if (qAns.length() > 0) {
+			
+			// code by imtiaz khan
+			if(qName.equalsIgnoreCase("q1_3") 
+					|| qName.equalsIgnoreCase("q3_3")
+					|| qName.equalsIgnoreCase("q4_13")
+					|| qName.equalsIgnoreCase("q4_13") )
+			{
+				if(qAns.length() < 5)
+				{	
+					CommonStaticClass.showMyAlert(con, "Not Correct",
+							"Length of ID must be 5 digit");
+					return;
+				}
+					
+			}
 			// Validation & skip definition
 			String sql = "";
 			if (!CommonStaticClass.isMember)
@@ -13874,6 +13889,31 @@ public class ParentActivity extends BaseActivity implements FormListener {
 						"You must provide correct data to proceed");
 				return;
 			}
+		}
+		
+		//code by imtiaz khan
+		
+		if((CommonStaticClass.questionMap.get(CommonStaticClass.currentSLNo)
+				.getQvar().equalsIgnoreCase("q4_9")
+				|| CommonStaticClass.questionMap.get(CommonStaticClass.currentSLNo)
+				.getQvar().equalsIgnoreCase("q4_12")
+				) && 
+				!((Integer.parseInt(hourBox.getText().toString()) < 24 
+						||Integer.parseInt(hourBox.getText().toString()) == 99) 
+					&& 
+				(Integer.parseInt(minBox.getText().toString())<60 
+						|| Integer.parseInt(minBox.getText().toString()) == 99)
+					&& 
+				(Integer.parseInt(dayBox.getText().toString())<30)
+						|| Integer.parseInt(dayBox.getText().toString()) == 99)
+				)
+		{
+			
+					CommonStaticClass.showMyAlert(con, "Error",
+						"Wrong Input.Give corretct input " +
+						"(99 for DK)");
+					return;
+			
 		}
 
 		String sql = "";
