@@ -10406,7 +10406,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 			public void afterTextChanged(Editable s) {
 
-				if (qName.equalsIgnoreCase("q3_3")) {
+				if (qName.equalsIgnoreCase("q_3")) {
 					String lineNumber = s.toString();
 					if (lineNumber.length() > 5) {
 						CommonStaticClass.showMyAlert(con, "Message",
@@ -10913,7 +10913,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					|| qName.equalsIgnoreCase("q4_13")
 					|| qName.equalsIgnoreCase("q4_13") )
 			{
-				if(qAns.length() < 5)
+				if(qAns.length() !=5 )
 				{	
 					CommonStaticClass.showMyAlert(con, "Not Correct",
 							"Length of ID must be 5 digit");
