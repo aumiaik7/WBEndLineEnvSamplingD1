@@ -2701,6 +2701,11 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 	private void updateTableDataFrmComboBox() {
 		// TODO Auto-generated method stub
+		if(sResCode.equalsIgnoreCase(""))
+		{
+			CommonStaticClass.showMyAlert(con, "Alert", "Please select an item in order to proceed");
+			return;
+		}
 		try {
 			String sql = "";
 			if ((CommonStaticClass.questionMap
@@ -7230,9 +7235,9 @@ public class ParentActivity extends BaseActivity implements FormListener {
 				// TODO Auto-generated method stub
 				// updateTableData();
 
-				if (((EditText) vg.findViewById(R.id.txtid)).length() == 0) {
+				if (((EditText) vg.findViewById(R.id.txtid)).length() != 5) {
 					CommonStaticClass.showMyAlert(con, "Message",
-							"Please fill all fields correctly");
+							"ID must be of 5 digits");
 					return;
 				}
 				/*
@@ -7254,9 +7259,24 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 				CommonStaticClass.dataId = ((EditText) vg
 						.findViewById(R.id.txtid)).getText().toString();
-				if (CommonStaticClass.dataId.length() > 0) {
+				
+				//code by imtiaz khan
+				String first3 = Character.toString(CommonStaticClass.dataId.charAt(0))
+						+Character.toString(CommonStaticClass.dataId.charAt(1))
+						+Character.toString(CommonStaticClass.dataId.charAt(2));
+				String last2 = Character.toString(CommonStaticClass.dataId.charAt(3))
+						+Character.toString(CommonStaticClass.dataId.charAt(4));
+				int first3Int = Integer.parseInt(first3);
+				int last2Int = Integer.parseInt(last2);
+				
+				if (CommonStaticClass.dataId.length() == 5) {
+					
+					if((first3Int >= 1 && first3Int <=720)
+							&& (last2Int >=1 && last2Int <= 8))
+					{
 					progressDialog = ProgressDialog.show(con, "Wait",
 							"Please wait while processing next question");
+					
 
 					new Thread() {
 
@@ -7296,6 +7316,13 @@ public class ParentActivity extends BaseActivity implements FormListener {
 						}
 
 					}.start();
+					}
+					else 
+					{
+						CommonStaticClass.showMyAlert(con, "Alert", "First 3 digits Should be" +
+								" within 001-720 and las two digits should be within 01-08");
+						return;
+					}
 				} else {
 					CommonStaticClass
 							.showFinalAlert(con,
@@ -7600,7 +7627,10 @@ public class ParentActivity extends BaseActivity implements FormListener {
 				||CommonStaticClass.questionMap.
 				get(CommonStaticClass.currentSLNo).getQvar().equalsIgnoreCase("m516"))
 		{
-			
+			Typeface font = Typeface.createFromAsset(getAssets(),
+					"SolaimanLipi.ttf");
+			qqq.setTypeface(font);
+						
 			String PID = "";
 			String textBang = "দয়া করে হুইলপ্যাকে এই ক্রমানুসারে লেবেল বসান";
 			String textEng = "PROMPT: Please label the whirlpak with the following label:";
@@ -7623,12 +7653,21 @@ public class ParentActivity extends BaseActivity implements FormListener {
 			}
 			
 				
-				if(CommonStaticClass.langBng)			
-					qqq.setText(textBang+
-					"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3"));
+				if(CommonStaticClass.langBng)	
+				{
+					/*Typeface font = Typeface.createFromAsset(getAssets(),
+							"Siyam Rupali ANSI.ttf");
+					qqq.setTypeface(font);*/
+					qqq.setText(Html.fromHtml(textBang+
+									"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3")));
+				}
+//					qqq.setText(textBang+
+//					"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3"));
 				else 
-					qqq.setText(textEng+
-							"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3"));
+					qqq.setText(Html.fromHtml(textEng+
+							"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3")));
+//					qqq.setText(textEng+
+//							"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3"));
 				
 			
 			
@@ -8968,6 +9007,19 @@ public class ParentActivity extends BaseActivity implements FormListener {
 		if (checkIfSingleOptionIsCheckedFrmMultipleChoice())
 
 		{
+			if(CommonStaticClass.questionMap
+					.get(CommonStaticClass.currentSLNo).getQvar().equalsIgnoreCase("q3_4"))
+			{
+					
+				if(aaa.get(0) == 1 
+						&& (aaa.get(1) == 1 || aaa.get(2) == 1 || aaa.get(3) == 1
+						|| aaa.get(4) == 1))
+				{
+					CommonStaticClass.showMyAlert(con, "ALERT",
+							"If no 5 is checked other options cannot be checked");
+					return;
+				}
+			}
 
 			Iterator it = edList.entrySet().iterator();
 			while (it.hasNext()) {
@@ -9063,12 +9115,23 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					
 						nullifyWithInRange(
 								CommonStaticClass.questionMap.get(
-										CommonStaticClass.currentSLNo).getQvar(),"sec04");
+										CommonStaticClass.currentSLNo).getQvar(),"q3_6");
 						CommonStaticClass.findOutNextSLNo(
-								qName,"sec04");
+								qName,"q3_6");
 						CommonStaticClass.nextQuestion(ParentActivity.this);
 					
 				}
+				/*if (qName.equalsIgnoreCase("q4_11") && getChoiceValue("q4_10") == 1) {
+					
+						nullifyWithInRange(
+								CommonStaticClass.questionMap.get(
+										CommonStaticClass.currentSLNo).getQvar(),"q4_12");
+						CommonStaticClass.findOutNextSLNo(
+								qName,"q4_12");
+						CommonStaticClass.nextQuestion(ParentActivity.this);
+					
+				}*/
+				
 				else {
 					CommonStaticClass.findOutNextSLNo(
 							qName,
@@ -12560,6 +12623,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 							CommonStaticClass.nextQuestion(ParentActivity.this);
 						}
 					}  
+					
 					else if(qName.equalsIgnoreCase("q4_6")
 							&& getChoiceValue("q4_4") == 2)
 					{
@@ -14026,8 +14090,9 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					&& getChoiceValue("q4_11_2") != 1
 					&& getChoiceValue("q4_11_11") != 1)
 			{
-				
-				CommonStaticClass.findOutNextSLNo(qName, "q4_14");
+				nullifyWithInRange(CommonStaticClass.questionMap.get(
+					CommonStaticClass.currentSLNo).getQvar(), "q414m");
+				CommonStaticClass.findOutNextSLNo(qName, "q414m");
 				CommonStaticClass.nextQuestion(ParentActivity.this);
 				
 			}
