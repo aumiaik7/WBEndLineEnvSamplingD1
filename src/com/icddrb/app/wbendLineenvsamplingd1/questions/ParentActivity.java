@@ -9010,8 +9010,15 @@ public class ParentActivity extends BaseActivity implements FormListener {
 			if(CommonStaticClass.questionMap
 					.get(CommonStaticClass.currentSLNo).getQvar().equalsIgnoreCase("q3_4"))
 			{
-					
-				if(aaa.get(0) == 1 
+				if( aaa.get(3) == 1 && aaa.get(4) == 1)	
+				{
+					{
+						CommonStaticClass.showMyAlert(con, "ALERT",
+								"Yes and No canot be checked together");
+						return;
+					}
+				}
+				else if(aaa.get(0) == 1 
 						&& (aaa.get(1) == 1 || aaa.get(2) == 1 || aaa.get(3) == 1
 						|| aaa.get(4) == 1))
 				{
@@ -11016,7 +11023,8 @@ public class ParentActivity extends BaseActivity implements FormListener {
 			if(qName.equalsIgnoreCase("q1_3") 
 					|| qName.equalsIgnoreCase("q3_3")
 					|| qName.equalsIgnoreCase("q4_13")
-					|| qName.equalsIgnoreCase("q4_13") )
+					|| qName.equalsIgnoreCase("q4_13") 
+					|| qName.equalsIgnoreCase("q5_15") )
 			{
 				if(qAns.length() !=5 )
 				{	
@@ -12633,7 +12641,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 						
 					}
 					else if(qName.equalsIgnoreCase("q5_18")
-							&& getChoiceValue("q4_6") != 1)
+							&& getChoiceValue("q4_16") != 1)
 					{
 						
 						CommonStaticClass.findOutNextSLNo(qName, "END");
@@ -14091,8 +14099,8 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					&& getChoiceValue("q4_11_11") != 1)
 			{
 				nullifyWithInRange(CommonStaticClass.questionMap.get(
-					CommonStaticClass.currentSLNo).getQvar(), "q414m");
-				CommonStaticClass.findOutNextSLNo(qName, "q414m");
+					CommonStaticClass.currentSLNo).getQvar(), "q4_13");
+				CommonStaticClass.findOutNextSLNo(qName, "q4_13");
 				CommonStaticClass.nextQuestion(ParentActivity.this);
 				
 			}
