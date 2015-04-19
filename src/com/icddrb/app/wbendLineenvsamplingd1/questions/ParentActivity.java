@@ -2339,6 +2339,8 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					 */
 					sql = String
 							.format("select * from District Order By DistName");
+				
+				
 				else if (CommonStaticClass.questionMap
 						.get(CommonStaticClass.currentSLNo).getQvar()
 						.equalsIgnoreCase("q11_1"))
@@ -2481,6 +2483,8 @@ public class ParentActivity extends BaseActivity implements FormListener {
 						}
 					} while (mCursor.moveToNext());
 				}
+				
+			
 				adapterForCombo = new ArrayAdapter(this,
 						android.R.layout.simple_spinner_item, users);
 				adapterForCombo
@@ -2494,7 +2498,55 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					mCursor.close();
 			}
 
-		} else // applicable when Spinner is loaded from options table
+		} 
+		//code by imtiaz khan
+		else if(CommonStaticClass.questionMap
+				.get(CommonStaticClass.currentSLNo).getQvar()
+				.equalsIgnoreCase("q11_2"))
+		{
+			users = new ArrayList<String>();
+			users.add("");
+			userIDs = new ArrayList<String>();
+			userIDs.add("");
+			for(int i = 1 ; i<= 31; i++)
+			{
+				users.add(i+"");
+				userIDs.add(i+"");
+			}
+			
+			adapterForCombo = new ArrayAdapter(this,
+					android.R.layout.simple_spinner_item, users);
+			adapterForCombo
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			// adapterForCombo.setDropDownViewResource(R.layout.checkedspintextview);
+			spinner.setAdapter(adapterForCombo);
+		}
+		else if(CommonStaticClass.questionMap
+				.get(CommonStaticClass.currentSLNo).getQvar()
+				.equalsIgnoreCase("q1_8"))
+		{
+			users = new ArrayList<String>();
+			users.add("");
+			userIDs = new ArrayList<String>();
+			userIDs.add("");
+			for(int i = 1 ; i<= 10; i++)
+			{
+				users.add(i+"");
+				userIDs.add(i+"");
+			}
+			users.add(55+"");
+			userIDs.add(55+"");
+			
+			users.add(99+"");
+			userIDs.add(99+"");
+			adapterForCombo = new ArrayAdapter(this,
+					android.R.layout.simple_spinner_item, users);
+			adapterForCombo
+					.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			// adapterForCombo.setDropDownViewResource(R.layout.checkedspintextview);
+			spinner.setAdapter(adapterForCombo);
+		}
+		else // applicable when Spinner is loaded from options table
 		{
 			op = CommonStaticClass.findOptionsForThisQuestion(
 					dbHelper,
@@ -2555,6 +2607,16 @@ public class ParentActivity extends BaseActivity implements FormListener {
 										0,
 										(parent.getItemAtPosition(pos)
 												.toString().lastIndexOf(":") - 1));
+					else if(CommonStaticClass.questionMap
+							.get(CommonStaticClass.currentSLNo)
+							.getQvar().equalsIgnoreCase("q11_2") || CommonStaticClass.questionMap
+							.get(CommonStaticClass.currentSLNo)
+							.getQvar().equalsIgnoreCase("q1_8") )
+					{
+						sResCode = parent
+								.getItemAtPosition(pos)
+								.toString();
+					}
 					else
 						sResCode = op.codeList.get(pos).toString();
 				} else {
@@ -2611,6 +2673,13 @@ public class ParentActivity extends BaseActivity implements FormListener {
 									|| CommonStaticClass.questionMap
 											.get(CommonStaticClass.currentSLNo)
 											.getQvar().equalsIgnoreCase("q11_1")
+											
+									|| CommonStaticClass.questionMap
+											.get(CommonStaticClass.currentSLNo)
+											.getQvar().equalsIgnoreCase("q11_2")	
+									|| CommonStaticClass.questionMap
+											.get(CommonStaticClass.currentSLNo)
+											.getQvar().equalsIgnoreCase("q1_8")	
 
 									|| CommonStaticClass.questionMap
 											.get(CommonStaticClass.currentSLNo)
@@ -7634,22 +7703,39 @@ public class ParentActivity extends BaseActivity implements FormListener {
 			String PID = "";
 			String textBang = "দয়া করে হুইলপ্যাকে এই ক্রমানুসারে লেবেল বসান";
 			String textEng = "PROMPT: Please label the whirlpak with the following label:";
+			String letterBng = "";
+			String letterEng = "";
+			
 			if(CommonStaticClass.questionMap.get(CommonStaticClass.currentSLNo).getQvar()
 					.equalsIgnoreCase("m11"))
-				PID = "S."+CommonStaticClass.dataId;
+			{
+				PID = CommonStaticClass.dataId;
+				letterBng = "এস.";
+				letterEng = "S.";
+			}
 		
 			else if(CommonStaticClass.questionMap.get(CommonStaticClass.currentSLNo).getQvar()
 					.equalsIgnoreCase("q331m"))
-				PID = "H."+CommonStaticClass.dataId;
+			{
+				PID = CommonStaticClass.dataId;
+				letterBng = "এইচ.";
+				letterEng = "H.";
+			}
 			else if(CommonStaticClass.questionMap.get(CommonStaticClass.currentSLNo).getQvar()
 					.equalsIgnoreCase("q414m"))
-				PID = "W."+CommonStaticClass.dataId;
+			{
+				PID = "ডাব্লু."+CommonStaticClass.dataId;
+				letterBng = "ডাব্লু.";
+				letterEng = "W.";
+			}
 			else if(CommonStaticClass.questionMap.get(CommonStaticClass.currentSLNo).getQvar()
 					.equalsIgnoreCase("m516"))
 			{
 				textBang = "দয়া করে খাবার সংগ্রহের টিউবে এই ক্রমানুসারে লেবেল বসান";
 				textEng = "PROMPT: Please label the food collection tube with the following label:";
 				PID = "F."+CommonStaticClass.dataId;
+				letterBng = "এফ.";
+				letterEng = "F.";
 			}
 			
 				
@@ -7659,13 +7745,13 @@ public class ParentActivity extends BaseActivity implements FormListener {
 							"Siyam Rupali ANSI.ttf");
 					qqq.setTypeface(font);*/
 					qqq.setText(Html.fromHtml(textBang+
-									"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3")));
+									"\n\n"+letterBng+PID+"."+getChoiceValue("q11_2")+"."+getChoiceValue("q11_3")));
 				}
 //					qqq.setText(textBang+
 //					"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3"));
 				else 
 					qqq.setText(Html.fromHtml(textEng+
-							"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3")));
+							"\n\n"+ letterEng+PID+"."+getChoiceValue("q11_2")+"."+getChoiceValue("q11_3")));
 //					qqq.setText(textEng+
 //							"\n\n"+ PID+"."+findDay()+"."+getChoiceValue("q11_3"));
 				
@@ -7704,7 +7790,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 			 * CommonStaticClass.currentSLNo).getQdesceng());
 			 */
 
-			if (CommonStaticClass.questionMap
+			/*if (CommonStaticClass.questionMap
 					.get(CommonStaticClass.currentSLNo).getQvar()
 					.equalsIgnoreCase("q9day1")) {
 
@@ -7742,7 +7828,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 						dbHelper);
 
 				qqq.setText(qqq.getText() + val);
-			}
+			}*/
 
 		}
 
@@ -16570,7 +16656,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 	}
 	
-	//code by imtiaz khan
+	/*//code by imtiaz khan
 	public String findDay()
 	{
 		String day= "";
@@ -16609,7 +16695,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 		}
 		
 		return day;
-	}
+	}*/
 	// code by imtiaz khan
 	public int getChoiceValue(String quesName)
 	{
