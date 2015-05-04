@@ -2529,6 +2529,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 			users.add("");
 			userIDs = new ArrayList<String>();
 			userIDs.add("");
+			users.add(0+"");
 			for(int i = 1 ; i<= 10; i++)
 			{
 				users.add(i+"");
@@ -2850,17 +2851,17 @@ public class ParentActivity extends BaseActivity implements FormListener {
 							if (a.equalsIgnoreCase("0")
 									|| a.equalsIgnoreCase("99")) {
 								CommonStaticClass.qskipList.add("SecP1");
-								nullifyWithInRange("SecP1", "SecP2");
+								//nullifyWithInRange("SecP1", "SecP2");
 							}
 							if (b.equalsIgnoreCase("0")
 									|| b.equalsIgnoreCase("99")) {
 								CommonStaticClass.qskipList.add("SecP2");
-								nullifyWithInRange("SecP2", "SecP3");
+								//nullifyWithInRange("SecP2", "SecP3");
 							}
 							if (c.equalsIgnoreCase("0")
 									|| c.equalsIgnoreCase("99")) {
 								CommonStaticClass.qskipList.add("SecP3");
-								nullifyWithInRange("SecP3", "p3_5");
+								//nullifyWithInRange("SecP3", "p3_5");
 							}
 
 						} while (mCursor1.moveToNext());
@@ -9206,9 +9207,8 @@ public class ParentActivity extends BaseActivity implements FormListener {
 				if (qName.equalsIgnoreCase("q3_4")
 						&& op.qidList.get(0).equalsIgnoreCase("q3_4_5") && aaa.get(0) == 1) {
 					
-						nullifyWithInRange(
-								CommonStaticClass.questionMap.get(
-										CommonStaticClass.currentSLNo).getQvar(),"q3_6");
+						//nullifyWithInRange(CommonStaticClass.questionMap.get(
+	//									CommonStaticClass.currentSLNo).getQvar(),"q3_6");
 						CommonStaticClass.findOutNextSLNo(
 								qName,"q3_6");
 						CommonStaticClass.nextQuestion(ParentActivity.this);
@@ -9715,7 +9715,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 
 			if (!IsVisited1st && !IsVisited2nd && !IsVisited3rd) {
 				CommonStaticClass.qskipList.add("p1_11");
-				nullifyWithInRange("p1_10", "p1_12");
+				//nullifyWithInRange("p1_10", "p1_12");
 			}
 			String SQL = "";
 			if (!IsVisited1st) {
@@ -9748,7 +9748,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 				// No skip
 			} else if (ShouldSkipfor1st && ShouldSkipfor2nd && ShouldSkipfor3rd) {
 				CommonStaticClass.qskipList.add("p1_12");
-				nullifyWithInRange("p1_11", "SecP2");
+				//nullifyWithInRange("p1_11", "SecP2");
 			}
 		}
 
@@ -11119,6 +11119,12 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					return;
 				}
 					
+			}
+			else if(qName.equalsIgnoreCase("q5_12") && Integer.parseInt(qAns)>50)
+			{
+				CommonStaticClass.showMyAlert(con, "Not Correct",
+						"Temperature must not be greater tha 50 degree celsius");
+				return;
 			}
 			// Validation & skip definition
 			String sql = "";
@@ -12726,6 +12732,14 @@ public class ParentActivity extends BaseActivity implements FormListener {
 						CommonStaticClass.nextQuestion(ParentActivity.this);
 						
 					}
+					else if(qName.equalsIgnoreCase("q5_0")
+							&& code == 2 && getChoiceValue("q4_16") != 1)
+					{
+						
+						CommonStaticClass.findOutNextSLNo(qName, "END");
+						CommonStaticClass.nextQuestion(ParentActivity.this);
+						
+					}
 					else if(qName.equalsIgnoreCase("q5_18")
 							&& getChoiceValue("q4_16") != 1)
 					{
@@ -12736,7 +12750,7 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					}
 					
 					else {
-						nullifyWithInRange(qName, nextToGo);
+						//nullifyWithInRange(qName, nextToGo);
 						CommonStaticClass.findOutNextSLNo(qName, nextToGo);
 						CommonStaticClass.nextQuestion(ParentActivity.this);
 					}
@@ -13533,12 +13547,20 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					CommonStaticClass.findOutNextSLNo(qName, "q4_18");
 					CommonStaticClass.nextQuestion(ParentActivity.this);
 					
-				} else {
-					nullifyWithInRange(
-							CommonStaticClass.questionMap.get(
-									CommonStaticClass.currentSLNo).getQvar(),
-							CommonStaticClass.questionMap.get(
-									CommonStaticClass.currentSLNo).getQnext1());
+				} 
+				else if(qName.equalsIgnoreCase("q5_17")
+						&& getChoiceValue("q4_16") != 1)
+				{
+					
+					CommonStaticClass.findOutNextSLNo(qName, "END");
+					CommonStaticClass.nextQuestion(ParentActivity.this);
+					
+				}else {
+//					nullifyWithInRange(
+//							CommonStaticClass.questionMap.get(
+//									CommonStaticClass.currentSLNo).getQvar(),
+//							CommonStaticClass.questionMap.get(
+//									CommonStaticClass.currentSLNo).getQnext1());
 					CommonStaticClass.findOutNextSLNo(
 							CommonStaticClass.questionMap.get(
 									CommonStaticClass.currentSLNo).getQvar(),
@@ -14184,9 +14206,9 @@ public class ParentActivity extends BaseActivity implements FormListener {
 					&& getChoiceValue("q4_11_2") != 1
 					&& getChoiceValue("q4_11_11") != 1)
 			{
-				nullifyWithInRange(CommonStaticClass.questionMap.get(
-					CommonStaticClass.currentSLNo).getQvar(), "q4_13");
-				CommonStaticClass.findOutNextSLNo(qName, "q4_13");
+//				nullifyWithInRange(CommonStaticClass.questionMap.get(
+//					CommonStaticClass.currentSLNo).getQvar(), "q4131mm");
+				CommonStaticClass.findOutNextSLNo(qName, "q4131mm");
 				CommonStaticClass.nextQuestion(ParentActivity.this);
 				
 			}
